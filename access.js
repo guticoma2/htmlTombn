@@ -1,0 +1,25 @@
+const ACCESS = {
+    nombre: 2,
+    cervecera: 5,
+    estilo: 7,
+    servicio: 9,
+    fechacata: 11,
+    precio: 13,
+    cantidad: 15,
+    alcohol: 17,
+    ibu: 19,
+    color: 21,
+    espuma: 23,
+    vaso: 25,
+    lugar: 27,
+    pais: 29,
+    favorita: 31,
+    notaaroma: 33,
+    notasabor: 35,
+    notaamargor: 37,
+    notapresencia: 39,
+    descripcion: 41,
+    calificacion: 43,
+}
+
+module.exports = ACCESS;
