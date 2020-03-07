@@ -3,7 +3,7 @@ const argv = require('yargs').usage('Usage: node $0 --html=[pathToHtmlFile] --ou
 .describe('html', 'Carpeta donde se encuentra el fichero HTML exportado.')
 .describe('output', 'Carpeta donde se guardará el fichero MBN generado. Por defecto el mismo directorio de la app.')
 .describe('verbose', 'Muestra log de todos los pasos que va realizando la app.')
-.describe('chunk', 'Se generarán ficheros de como máximo el tamaño de catas expeficidos hasta llegar al final.')
+.describe('chunk', 'Se generarán ficheros de como máximo el tamaño de catas especificados hasta llegar al final.')
 .argv;
 
 const ACCESS = require('./access');
