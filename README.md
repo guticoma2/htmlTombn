@@ -13,9 +13,9 @@ Es una utilidad para convertir (en el caso que la exportación a NBM falle) los 
 ## Uso
 
 ### Básico
-``` node htmlTombn.js --html \[nombre_fichero_html\ ```
+``` node htmlTombn.js --html [nombre_fichero_html] ```
 ### Creación de lotes (por si el fichero generado es demasiado grande y da problemas al importar)
-``` node htmlTombn.js --html \[nombre_fichero_html\] --chunks \[tamaño\] ```
+``` node htmlTombn.js --html [nombre_fichero_html] --chunks [tamaño] ```
 ### Si se requiere tener un informe completo de la conversión:
 
-``` node htmlTombn.js --html \[nombre_fichero_html\] --verbose \[otros_parámetros_opcionales\] ```
+``` node htmlTombn.js --html [nombre_fichero_html] --verbose [otros_parámetros_opcionales] ```
