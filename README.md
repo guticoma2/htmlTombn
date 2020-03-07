@@ -8,7 +8,7 @@ Es una utilidad para convertir (en el caso que la exportación a NBM falle) los 
 - Ir a https://nodejs.org/es/download/ para descargar Node (seleccione LTS)
 - Ejecute el instalador siguiendo las instrucciones
 - Abra la consola de comandos (en Windows escriba ``` cmd ``` en el buscador e INTRO)
-- Escriba ``` npm i htmlTonbm ``` y presione INTRO
+- Escriba ``` npm i @guticoma/html-to-mbn ``` y presione INTRO
 
 ## Uso
 

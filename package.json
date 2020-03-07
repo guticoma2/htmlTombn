@@ -1,9 +1,12 @@
 {
-  "name": "html-to-mbn",
+  "name": "@guticoma/html-to-mbn",
   "version": "1.0.0",
   "description": "Convert HTML mbn export file to MBN (XML). The purpose is to have a tool that when MBN export fails you could you this tool to export in HTML and parse it to XML mbn format to recover your stored data",
   "main": "htmlTombn.js",
-  "repository": "guticoma2/htmlTombn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guticoma2/htmlTombn.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +25,10 @@
     "html-entities": "^1.2.1",
     "moment": "^2.24.0",
     "yargs": "^15.1.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/guticoma2/htmlTombn/issues"
+  },
+  "homepage": "https://github.com/guticoma2/htmlTombn#readme",
+  "devDependencies": {}
 }
