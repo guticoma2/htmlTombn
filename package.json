@@ -1,6 +1,6 @@
 {
   "name": "@guticoma/html-to-mbn",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Convert HTML mbn export file to MBN (XML). The purpose is to have a tool that when MBN export fails you could you this tool to export in HTML and parse it to XML mbn format to recover your stored data",
   "main": "htmlTombn.js",
   "repository": {

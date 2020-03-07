@@ -1,6 +1,6 @@
 # htmlTonbm
 
-Es una utilidad para convertir (en el caso que la exportación a NBM falle) los ficheros HTML exportados de My Beer Notes a un fichero importable MBN (xml).
+Es una utilidad para convertir (en el caso que la exportación a MBN falle) los ficheros HTML exportados de My Beer Notes a un fichero importable MBN (xml).
 
 
 ## Instalación:
