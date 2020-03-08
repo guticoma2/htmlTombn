@@ -19,6 +19,6 @@ Es una utilidad para convertir (en el caso que la exportación a MBN falle) los 
 ### Si se requiere tener un informe completo de la conversión:
 ``` htmlTombn --html [nombre_fichero_html] --verbose [otros_parámetros_opcionales] ```
 ### Si se quire especificar el formato del fichero de salida:
-``` htmltoMbn --html [nombre_fichero_html] --format .xml [otros_parámetros_opcionales ```
+``` htmlTombn --html [nombre_fichero_html] --format .xml [otros_parámetros_opcionales ```
 
 _Valores válidos: ```.xml``` o ```.mbn```_
