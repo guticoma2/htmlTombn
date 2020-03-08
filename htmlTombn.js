@@ -1,4 +1,5 @@
 const fs = require('fs');
+const cursorPos = require('get-cursor-position');
 const ACCESS = require('./access');
 const Xml = require('./xml.helper').Xml;
 const Log = require('./logging.helper').Log;
@@ -52,7 +53,9 @@ const main = () => {
                 hasErrors = true;
             }
         }
-        writePcToConsole(getPcDone(this.globalNdx++, this.total));
+        const pc = getPcDone(this.globalNdx++, this.total);
+        writePcToConsole(pc);
+        this.pc = pc;
         Log.info(logValueExtracted);
         Log.info('Closing processed cata');
         xml.closeCata();
@@ -90,18 +93,38 @@ const main = () => {
         return  pc > 0 ? pc - 1 : pc;
     };
 
+    const writeBackgroundPcBar = () => {
+        let totalBar = '=';
+        for(let i = 0; i < 99; i++) { totalBar += '.' }
+        totalBar += '|';
+        process.stdout.write(totalBar);
+    }
+
     const writePcToConsole = pc => {
-        process.stdout.clearLine();
-        process.stdout.cursorTo(0);
-        process.stdout.write(`Processing ${pc}%...`);
+        process.stdout.cursorTo(0, this.cursorPos.row - 1);
+     
+        if (pc > this.pc ) {
+            process.stdout.cursorTo(pc, this.cursorPos.row - 1);
+            process.stdout.write('=');
+        }
+        process.stdout.cursorTo(101, this.cursorPos.row - 1);
+        process.stdout.write(`${pc} % processed.`);
     };
 
     try {
         const pathHtml = argv.html;
         const verbose = argv.verbose;
+
         this.pathOutput = argv.output || './';
         this.format = argv.format;
         this.globalNdx = 0;
+        this.pc = 0;
+        this.total = 0;
+        this.html = null;
+        this.cursorPos = 0;
+
+        writeBackgroundPcBar();
+        this.cursorPos = cursorPos.sync();
 
         Log.setVerbose(verbose);
         Log.info(`parssing HTML file: ${pathHtml}`);
@@ -121,7 +144,7 @@ const main = () => {
       
         if (hasErrors) Log.warning('Some errors ocurred. Check your .log file in the current directory.');
         else {
-            writePcToConsole(100);
+            writePcToConsole(99);
             Log.success(`HTML exported to MBN successfully to: ${this.pathOutput}`);
         }
     } catch(err) {
