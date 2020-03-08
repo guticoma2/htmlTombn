@@ -55,7 +55,7 @@ const Log = (lpath = defaultLogPath) => {
     const log = (msg, level = logLevel.error) => {
         if (!this.isVerbose && level === logLevel.info) return; 
         const date = moment();
-        console.log(createMsg(msg, date, level, true));
+        if (level !== logLevel.info) console.log(createMsg(msg, date, level, true));
         append(createMsg(msg, date, level, false));
     };
     const error = msg => log(msg, logLevel.error);

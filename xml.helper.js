@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const xmlFormatter = require('xml-formatter');
 const ACCESS = require('./access');
 const Log = require('./logging.helper').Log;
 
@@ -70,7 +71,8 @@ const defaultXmlPath = './';
 const writeToDisk = (xmlPath = defaultXmlPath, i, xml, format = formats.MBN) => {
     const xmlPathFile = path.join(xmlPath, `result.${i}${format}`);
     try {
-        fs.writeFileSync(xmlPathFile, xml);
+        fs.writeFileSync(xmlPathFile,
+            format === formats.XML ? xmlFormatter(xml, { collapseContent: true }) : xml);
         Log.info(`XML file ${xmlPathFile} generated.`);
         return true;
     } catch(err) {
@@ -88,9 +90,11 @@ const Xml = () => {
         openCata: () => { xml = createXmlCata(xml) },
         closeCata: () => { xml = closeXmlCata(xml) },
         close: () => { xml = closeXmlRoot(xml) },
-        writeToDisk: (opath, i, format) => { xml = writeToDisk(opath, i, xml, format) }, 
+        writeToDisk: (opath, i, format) => writeToDisk(opath, i, xml, format), 
     }
 };
+
+Xml.formats = formats;
 
 module.exports = {
     Xml,

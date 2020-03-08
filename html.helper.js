@@ -5,15 +5,17 @@ const ACCESS = require('./access');
 const Log = require('./logging.helper').Log;
 
 // PRIVATE
-
+const isDecimal = value => /^\d+\.\d+$/g.test(value.toString());
 const entities = new Entities();
 const addDecimal = (number) => {
     if (number === '') return '0.0';
-    const hasDec = number.toString().split('.').length > 1;
-    return hasDec ? number : number + '.0';
+    const isDec = isDecimal(number) 
+    const result = isDec ? number : number + '.0';
+    if (!isDec)
+        Log.info(`Non decimal found ${number} converting to value with decimal: ${result}`);
+    return result;
 }
-const sanitizeJSON = value =>
-    entities.encode(value);
+const sanitizeJSON = value => entities.encode(value);
 
 const cleanUpSpacing = value => value.replace(/\r?\n|\r/g, ' ').replace(/\s\s+/g, ' ');
 
@@ -22,16 +24,16 @@ const getBeers = ($) => $('table');
 const getBeerRows = ($, beer) => $(beer).find('tbody tr');
 
 const get = ($, rows, access) => {
-    const value = cleanUpSpacing($($(rows).find('td')[access]).text());
+    const value = sanitizeJSON(cleanUpSpacing($($(rows).find('td')[access]).text()));
     switch(access) {
         case ACCESS.precio:
         case ACCESS.alcohol:
-            return sanitizeJSON(addDecimal(value));
+            return addDecimal(value);
         case ACCESS.ibu:
         case ACCESS.favorita:
             return value ? 1 : 0;
         default:
-            return sanitizeJSON(value);
+            return (value);
     }
 }
 
