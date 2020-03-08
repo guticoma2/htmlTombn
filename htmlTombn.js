@@ -108,7 +108,7 @@ const main = () => {
             process.stdout.write('=');
         }
         process.stdout.cursorTo(101, this.cursorPos.row - 1);
-        process.stdout.write(`${pc} % processed.`);
+        process.stdout.write(`${pc + 1} % processed`);
     };
 
     try {
