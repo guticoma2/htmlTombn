@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const fs = require('fs');
 const cursorPos = require('get-cursor-position');
 const ACCESS = require('./access');
