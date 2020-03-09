@@ -8,7 +8,8 @@
     "url": "git+https://github.com/guticoma2/htmlTombn.git"
   },
   "bin": {
-    "htmlTombn": "./htmlTombn.js"
+    "htmlTombn": "./htmlTombn.js",
+    "quepaguepujol":"./htmlTombn.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

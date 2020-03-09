@@ -19,9 +19,9 @@ const argv = require('yargs').usage('Usage: node $0 --html=[pathToHtmlFile] --ou
     if (yargs.output !== undefined && !fs.existsSync(yargs.output))
         throw Error('invalid output path.');
     if (yargs.html !== undefined && !fs.existsSync(yargs.html))
-        throw Error('can`t find html file on the location specified');
+        throw Error('can`t find html file on the specified location');
     if (yargs.chunks !== undefined && (!Number.isInteger(yargs.chunk) || yargs.chunk < 1)) {
-        throw Error('inlivad chunk number.');
+        throw Error('invalid chunk number.');
     }
     return true;
 })
