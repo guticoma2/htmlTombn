@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs');
+const chalk = require('chalk');
 const cursorPos = require('get-cursor-position');
 const ACCESS = require('./access');
 const Xml = require('./xml.helper').Xml;
@@ -7,7 +8,7 @@ const Log = require('./logging.helper').Log;
 const Html = require('./html.helper').Html;
 
 const argv = require('yargs').usage('Usage: node $0 --html=[pathToHtmlFile] --output=[pathToSaveMBN] --chunk=[chunkSize] --format=[.mbn|.xml] --verbose')
-.demandOption(['html'])
+// .demandOption(['html'])
 .describe('html', 'Carpeta donde se encuentra el fichero HTML exportado.')
 .describe('output', 'Carpeta donde se guardará el fichero MBN generado. Por defecto el mismo directorio de la app.')
 .describe('verbose', 'Muestra log de todos los pasos que va realizando la app.')
@@ -19,7 +20,7 @@ const argv = require('yargs').usage('Usage: node $0 --html=[pathToHtmlFile] --ou
     if (yargs.output !== undefined && !fs.existsSync(yargs.output))
         throw Error('invalid output path.');
     if (yargs.html !== undefined && !fs.existsSync(yargs.html))
-        throw Error('can`t find html file on the specified location');
+        throw Error('can`t find html file in the specified location');
     if (yargs.chunks !== undefined && (!Number.isInteger(yargs.chunk) || yargs.chunk < 1)) {
         throw Error('invalid chunk number.');
     }
@@ -48,12 +49,15 @@ const main = () => {
                     xml.add(value, access);
                 }
                 logValueExtracted += `{ KEY: ${key}, VALUE: ${value} }`;
+                
             } catch(err) {
                 const error = `error in register ${i} and key ${key} : ${err}`;
+                this.nonProcessed.push(error);
                 Log.error(error);
                 hasErrors = true;
             }
         }
+        if(!hasErrors) this.processedCount++;
         const pc = getPcDone(this.globalNdx++, this.total);
         writePcToConsole(pc);
         this.pc = pc;
@@ -101,6 +105,12 @@ const main = () => {
         process.stdout.write(totalBar);
     }
 
+    const writeOverview = () => {
+        process.stdout.write(chalk.blue('Overview: \n'));
+        process.stdout.write(`total beers processed: ${chalk.green(this.processedCount)} from ${chalk.blue(this.total)} beers\n`);
+        process.stdout.write(`total failures: ${chalk.red(this.nonProcessed.length)}\n`);
+    }
+
     const writePcToConsole = pc => {
         process.stdout.cursorTo(0, this.cursorPos.row - 1);
      
@@ -123,6 +133,8 @@ const main = () => {
         this.total = 0;
         this.html = null;
         this.cursorPos = 0;
+        this.processedCount = 0;
+        this.nonProcessed = [];
 
         writeBackgroundPcBar();
         this.cursorPos = cursorPos.sync();
@@ -142,12 +154,15 @@ const main = () => {
         for (let i = 0, l = chunks.length; i < l; i++) {
             if(!exportBatch(chunks[i], i)) hasErrors = true;
         }
-      
+
         if (hasErrors) Log.warning('Some errors ocurred. Check your .log file in the current directory.');
         else {
             writePcToConsole(99);
             Log.success(`HTML exported to MBN successfully to: ${this.pathOutput}`);
         }
+
+       writeOverview();
+
     } catch(err) {
         Log.error(`Can not process this file. ${err}`);
     }
